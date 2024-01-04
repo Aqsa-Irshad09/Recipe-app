@@ -111,7 +111,7 @@ const Navbar = () => {
                   <ListItem
                     button
                     component={RouterLink}
-                    to={URL.PLANNED_MEALS}
+                    to={URL.PLANNED_RECIPE}
                   >
                     <ListItemText primary="Planned Meals" />
                   </ListItem>
