@@ -1,40 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { TextField, Button, Typography, Box } from "@mui/material";
-import { StyledContainer } from "./SignInStyles";
+import { StyledButton, StyledContainer } from "./SignInStyles";
 import { generateValidationSchema } from "../../validations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/features/loginUserSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { URL } from "../../constant";
+
 import LoginButton from "../../components/LoginButton";
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const fields = ["email", "password"];
 
   const validationSchema = generateValidationSchema(fields);
 
   const handleSubmit = async (values) => {
-    const storedUserData = JSON.parse(localStorage.getItem("users")) || [];
-    console.log("User data from local storage", storedUserData);
-    try {
-      // Dispatch login action if credentials are valid
-      await dispatch(loginUser(values));
-
-      const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-      if (isLoggedIn === "true") {
-        navigate(URL.HOME);
-      }
-    } catch (error) {
-      console.error("Failed to log in:", error);
-    }
+    dispatch(loginUser(values));
   };
-  // Render a redirect conditionally based on loggedIn state
+
+  // const isLoggedIn = localStorage.getItem("isLoggedIn");
+  // if (isLoggedIn === "true") {
+  //   navigate("/");
+  // }
   const navigateToSignUp = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     navigate("/signup");
   };
 
@@ -78,9 +71,14 @@ const SignIn = () => {
               fullWidth
             />
             <br />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <StyledButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
               Submit
-            </Button>
+            </StyledButton>
             <Box
               sx={{
                 display: "flex",
@@ -97,6 +95,7 @@ const SignIn = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   textDecoration: "none",
+                  padding: "10px 0",
                 }}
                 component={Link}
                 to="/signup"
@@ -104,7 +103,7 @@ const SignIn = () => {
                 color="primary"
                 onClick={navigateToSignUp}
               >
-                Have an account? Sign up
+                Have an account? <strong>Sign up</strong>
               </Typography>
               or
               <LoginButton />

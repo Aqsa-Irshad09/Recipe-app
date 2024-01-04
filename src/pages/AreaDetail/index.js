@@ -12,6 +12,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import styled from "@emotion/styled";
 
 const AreaDetail = () => {
   const clampStyle = {
@@ -25,9 +26,12 @@ const AreaDetail = () => {
   };
   const theme = useTheme();
 
-  const wrapperStyle = {
-    ...theme.wrapper,
-  };
+  const StyledCardMedia = styled(CardMedia)({
+    transition: "transform 0.3s ease-in-out",
+    "&:hover": {
+      transform: "scale(1.1)", // Zoom effect on hover
+    },
+  });
   const { areaName } = useParams();
   const dispatch = useDispatch();
   const recipes = useSelector((state) => state.selectedRecipeByArea.recipes);
@@ -51,7 +55,7 @@ const AreaDetail = () => {
   }
 
   return (
-    <Container style={wrapperStyle}>
+    <Container>
       <Typography variant="h2">{areaName}</Typography>
 
       <Grid container spacing={2} width={"100%"}>
@@ -59,7 +63,7 @@ const AreaDetail = () => {
           <Grid recipe key={recipe} xs={12} sm={6} md={4} lg={3}>
             <Card>
               <CardActionArea>
-                <CardMedia
+                <StyledCardMedia
                   component="img"
                   height="200"
                   image={recipe.strMealThumb}

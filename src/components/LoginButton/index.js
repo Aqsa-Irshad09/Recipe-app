@@ -16,7 +16,6 @@ const LoginButton = () => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
     if (storedAccessToken) {
-      setAccessToken(storedAccessToken);
       setIsLoggedIn(true);
     }
   }, []);
@@ -36,9 +35,7 @@ const LoginButton = () => {
       setAccessToken(null);
       setIsLoggedIn(false);
       localStorage.removeItem("accessToken");
-
       localStorage.removeItem("isLoggedIn");
-
       console.log("Logout Successfully");
     }
   };
@@ -47,17 +44,16 @@ const LoginButton = () => {
     setAccessToken(credentialResponse.credential);
     setIsLoggedIn(true);
     localStorage.setItem("accessToken", credentialResponse.credential);
-
     localStorage.setItem("isLoggedIn", "true");
-    const result = jwtDecode(credentialResponse.credential);
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
     const userDetails = jwtDecode(credentialResponse.credential);
     localStorage.setItem("userDetails", JSON.stringify(userDetails));
-
-    if (isLoggedIn === "true") {
-      navigate(URL.HOME);
-    }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <GoogleOAuthProvider clientId={CLIENTID}>

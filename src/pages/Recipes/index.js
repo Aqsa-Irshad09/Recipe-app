@@ -19,7 +19,7 @@ const Recipes = () => {
   const error = useSelector((state) => state.meals.error);
 
   useEffect(() => {
-    dispatch(fetchMeals("your_search_query_here")); // Dispatch fetchMeals action with a search query
+    dispatch(fetchMeals("your_search_query_here"));
   }, [dispatch]);
 
   if (status === "loading") {

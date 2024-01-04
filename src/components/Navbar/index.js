@@ -12,11 +12,14 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { URL } from "../../constant";
+import styles from "./style";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,20 +27,47 @@ const Navbar = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  const isAuthenticated = () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    return isLoggedIn === "true";
+  };
+  const handleLogout = () => {
+    toast.success("logout completed");
+    localStorage.removeItem("isLoggedIn");
+    navigate("/");
+  };
   const drawerContent = (
     <List>
-      <ListItem button component={RouterLink} to={URL.HOME}>
-        <ListItemText primary="Home" />
-      </ListItem>
-      <ListItem button component={RouterLink} to={URL.ABOUT}>
-        <ListItemText primary="About" />
-      </ListItem>
-      <ListItem button component={RouterLink} to={URL.RECIPE}>
-        <ListItemText primary="Recipes" />
-      </ListItem>
+      {isAuthenticated() ? (
+        <>
+          <ListItem button component={RouterLink} to={URL.HOME}>
+            <ListItemText primary="Home" />
+          </ListItem>
 
-      {/* Add more menu items as needed */}
+          <ListItem button component={RouterLink} to={URL.RECIPE}>
+            <ListItemText primary="Recipes" />
+          </ListItem>
+          <ListItem button component={RouterLink} to={URL.PLANNED_RECIPE}>
+            <ListItemText primary="Planned Meals" />
+          </ListItem>
+          <ListItem button onClick={handleLogout}>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </>
+      ) : (
+        <>
+          <ListItem button component={RouterLink} to={URL.HOME}>
+            <ListItemText primary="Home" />
+          </ListItem>
+
+          <ListItem button component={RouterLink} to={URL.RECIPE}>
+            <ListItemText primary="Recipes" />
+          </ListItem>
+          <ListItem button component={RouterLink} to={URL.SIGNIN}>
+            <ListItemText primary="Signin" />
+          </ListItem>
+        </>
+      )}
     </List>
   );
 
@@ -54,7 +84,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="sticky" sx={styles.navbar}>
         <Toolbar>
           <MenuButton
             edge="start"
@@ -72,14 +102,24 @@ const Navbar = () => {
               <ListItem button component={RouterLink} to={URL.HOME}>
                 <ListItemText primary="Home" />
               </ListItem>
-              <ListItem button component={RouterLink} to={URL.ABOUT}>
-                <ListItemText primary="About" />
-              </ListItem>
+
               <ListItem button component={RouterLink} to={URL.RECIPE}>
                 <ListItemText primary="Recipes" />
               </ListItem>
-
-              {/* Add more menu items as needed */}
+              {isAuthenticated() && (
+                <>
+                  <ListItem
+                    button
+                    component={RouterLink}
+                    to={URL.PLANNED_MEALS}
+                  >
+                    <ListItemText primary="Planned Meals" />
+                  </ListItem>
+                  <ListItem button onClick={handleLogout}>
+                    <ListItemText primary="Logout" />
+                  </ListItem>
+                </>
+              )}
             </List>
           )}
         </Toolbar>

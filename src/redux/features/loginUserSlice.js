@@ -1,12 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { apiLoginUser } from "../../api/apiLoginUser";
 
-const initialState = {
-  user: null,
-  status: "idle",
-  error: null,
-};
-
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, thunkAPI) => {
@@ -14,9 +8,11 @@ export const loginUser = createAsyncThunk(
       const response = await apiLoginUser(userData);
 
       if (response) {
-        localStorage.setItem("isLoggedIn", "true"); // Set logged-in status in localStorage
+        alert("User logged in successfully");
+
         return response;
       } else {
+        alert("Failed to login user");
         throw new Error("Failed to login user");
       }
     } catch (error) {
@@ -25,9 +21,13 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-const loginSlice = createSlice({
+const loginUserSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: {
+    user: null,
+    status: "idle",
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -40,9 +40,9 @@ const loginSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload; // Error message from the rejected promise
+        state.error = action.payload;
       });
   },
 });
 
-export default loginSlice.reducer;
+export default loginUserSlice.reducer;

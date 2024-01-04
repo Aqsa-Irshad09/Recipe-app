@@ -1,20 +1,8 @@
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import { makeStyles } from "@material-ui/core/styles";
-
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import { makeStyles } from "@mui/styles";
+
 import { images } from "../../data";
-const useStyles = makeStyles({
-  captionStyle: {
-    fontSize: "2em",
-    fontWeight: "bold",
-  },
-  slideNumberStyle: {
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
-});
+
 const captionStyle = {
   fontSize: "2em",
   fontWeight: "bold",

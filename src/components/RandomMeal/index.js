@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRandomMealAction } from "../../redux/features/randomMealSlice";
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Container,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import { useTheme } from "@emotion/react";
-import { StyledBox, StyledInnerBox } from "./style";
+import styles from "./style";
 
 const RandomMeal = () => {
-  const theme = useTheme();
-
-  const wrapperStyle = {
-    ...theme.wrapper,
-  };
   const dispatch = useDispatch();
   const { randomMeal, status, error } = useSelector(
     (state) => state.randomMeals
@@ -22,34 +24,36 @@ const RandomMeal = () => {
   };
 
   useEffect(() => {
-    generateRecipe(); // Automatically generate a recipe when the component mounts
+    generateRecipe();
   }, []);
 
   return (
-    <Container style={wrapperStyle} sx={{ py: 5 }}>
-      <Typography variant="h2">Get A Random Recipe</Typography>
-      <div>
-        {status === "loading" && <p>Loading...</p>}
-        {status === "failed" && <p>Error: {error}</p>}
-        {status === "succeeded" && randomMeal && (
-          <StyledBox>
-            <StyledInnerBox>
-              <img
-                src={randomMeal.strMealThumb}
-                alt={randomMeal.strMeal}
-                style={{ height: "300px", width: "100%", objectFit: "cover" }}
-              />
-            </StyledInnerBox>
-            <styledLeftBox>
-              {" "}
-              <h2>{randomMeal.strMeal}</h2>
-              <Typography variant="body">
-                {randomMeal.strInstructions}
-              </Typography>
-            </styledLeftBox>
-          </StyledBox>
-        )}
-      </div>
+    <Box>
+      <Typography variant="h2"> Featured Recipe</Typography>
+
+      <Box sx={styles.randomContainer}>
+        <Box sx={styles.innerContainer}>
+          {status === "loading" && <p>Loading...</p>}
+          {status === "failed" && <p>Error: {error}</p>}
+          {status === "succeeded" && randomMeal && (
+            <>
+              <Box sx={styles.imageContainer}>
+                <img
+                  style={styles.randomMealImage}
+                  src={randomMeal.strMealThumb}
+                  alt={randomMeal.strMeal}
+                />
+              </Box>
+              <Box sx={styles.randomMeal}>
+                <h2>{randomMeal.strMeal}</h2>
+                <Typography variant="body">
+                  {randomMeal.strInstructions.substring(0, 1000)}
+                </Typography>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Box>
       <Typography
         component={Link}
         to="#"
@@ -58,7 +62,7 @@ const RandomMeal = () => {
       >
         Generate Random Recipe
       </Typography>
-    </Container>
+    </Box>
   );
 };
 

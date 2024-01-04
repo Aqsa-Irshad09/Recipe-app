@@ -1,7 +1,7 @@
 import React from "react";
 import theme from "./theme";
 import { ThemeProvider } from "@mui/material";
-import MainRouter from "./router";
+import MainRouter from "./routes";
 
 const App = () => {
   return (

@@ -1,26 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import { TextField, Button, Typography, Box } from "@mui/material";
-import { StyledContainer } from "./SignUpStyles";
+import { StyledButton, StyledContainer } from "./SignUpStyles";
 import { generateValidationSchema } from "../../validations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/features/registerUserSlice";
 import LoginButton from "../../components/LoginButton";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fields = ["name", "email", "password", "confirmPassword", "phone"]; // Define fields for sign-up form
+  const fields = ["name", "email", "password", "confirmPassword", "phone"];
 
-  const validationSchema = generateValidationSchema(fields); // Generate validation schema based on fields
+  const validationSchema = generateValidationSchema(fields);
+  const registerUserData = useSelector((state) => state.user.register_users);
 
+  const { error, status, user } = registerUserData || {};
+  console.log("error", error);
   const handleSubmit = (values) => {
-    dispatch(registerUser(values));
-    console.log("Sign Up form submitted:", values);
+    try {
+      dispatch(registerUser(values));
+    } catch (err) {
+      console.error("Error:", err);
+    }
   };
+  useEffect(() => {
+    if (status === "succeeded") {
+      toast.success("Registration successful!");
+      navigate("/signin");
+    }
+  }, [status]);
+
   const navigateToSignIn = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     navigate("/signin");
   };
   return (
@@ -63,6 +77,11 @@ const SignUp = () => {
               fullWidth
             />
             <br />
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
             <Field
               as={TextField}
               label="Password"
@@ -104,9 +123,14 @@ const SignUp = () => {
               fullWidth
             />
             <br />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
+            <StyledButton
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
               Submit
-            </Button>
+            </StyledButton>
             <Box
               sx={{
                 display: "flex",
@@ -125,6 +149,7 @@ const SignUp = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   textDecoration: "none",
+                  padding: "10px 0",
                 }}
                 component={Link}
                 to="/signup"
@@ -132,7 +157,7 @@ const SignUp = () => {
                 color="primary"
                 onClick={navigateToSignIn}
               >
-                Already Have Account? Sign in
+                Already Have Account? <strong>Sign in</strong>
               </Typography>
 
               <LoginButton />

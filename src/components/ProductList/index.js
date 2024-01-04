@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ProductCard from "../ProductCard";
 import { fetchMeals } from "../../redux/features/fetchMealSlice";
 
 import { URL } from "../../constant";
 import { useNavigate } from "react-router-dom";
+import styles from "./style";
 
 const ProductList = () => {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  const wrapperStyle = {
-    ...theme.wrapper,
-  };
   const dispatch = useDispatch();
 
   const mealList = useSelector((state) => state.meals.mealList);
@@ -40,7 +38,7 @@ const ProductList = () => {
     navigate(URL.RECIPE);
   };
   return (
-    <Container style={wrapperStyle}>
+    <Box>
       <Typography variant="h2">Our Recipes</Typography>
       <Grid container spacing={2}>
         {mealList.slice(0, 6).map((item) => (
@@ -49,14 +47,10 @@ const ProductList = () => {
           </Grid>
         ))}
       </Grid>
-      <Button
-        onClick={seeMore}
-        variant="contained"
-        sx={{ display: "flex", alignItems: "center", margin: "20px auto" }}
-      >
+      <Button onClick={seeMore} variant="contained" sx={styles.moreBtn}>
         More Meals
       </Button>
-    </Container>
+    </Box>
   );
 };
 

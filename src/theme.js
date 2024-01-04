@@ -35,12 +35,13 @@ export const theme = createTheme({
   typography: {
     h2: {
       fontSize: "3rem",
-      color: "black",
+      color: "#5D3A17",
       padding: "10px 0px",
       margin: "40px 0px",
       fontSize: "30px",
       fontWeight: "bold",
       textAlign: "center",
+      background: "#D2B48C",
       "@media (min-width:600px)": {
         fontSize: "1.5rem",
       },
@@ -60,7 +61,7 @@ export const theme = createTheme({
       },
     },
     body1: {
-      color: "#808080",
+      color: "#8D6E63",
       fontSize: "16px",
       "@media (max-width:1024px)": {
         fontSize: "14px",
@@ -74,6 +75,14 @@ export const theme = createTheme({
     height: "70vh",
     width: "100%",
     backgroundSize: "cover",
+  },
+  button: {
+    backgroundColor: "#8D6E63",
+    color: "#FFFFFF",
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: "#FFFFFF",
+    },
   },
 });
 

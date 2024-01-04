@@ -1,11 +1,10 @@
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { StyledBox, StyledContainer } from "./style";
-
+import styles from "./style";
 const Footer = () => {
   return (
-    <StyledBox>
+    <Box sx={styles.footer}>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
         FeastFinder
       </Typography>
@@ -23,7 +22,7 @@ const Footer = () => {
       <Typography variant="body" color={"primary"}>
         © 2023 Your Company Name. All Rights Reserved.
       </Typography>
-    </StyledBox>
+    </Box>
   );
 };
 

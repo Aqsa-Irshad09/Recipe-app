@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import styles from "./style";
 import {
+  Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -16,9 +19,6 @@ import { useTheme } from "@emotion/react";
 const RecipeByArea = () => {
   const theme = useTheme();
 
-  const wrapperStyle = {
-    ...theme.wrapper,
-  };
   const dispatch = useDispatch();
   const areas = useSelector((state) => state.recipeByArea.areas);
   const status = useSelector((state) => state.recipeByArea.status);
@@ -40,29 +40,41 @@ const RecipeByArea = () => {
   }
 
   return (
-    <Container style={wrapperStyle}>
+    <Box>
       <Typography variant="h2">Select By Area</Typography>
       <Grid container spacing={2}>
         {areas.map((area) => (
-          <Grid item key={area.strArea} sm={3} md={6} lg={4}>
+          <Grid item key={area.strArea} sm={6} md={4} lg={3}>
             <Link
               to={`/area/${area.strArea}`}
               style={{ textDecoration: "none" }}
             >
-              <Card>
+              <Card sx={styles.card}>
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    sx={{
+                      "&:hover": {
+                        textAlign: "center",
+                      },
+                    }}
+                  >
+                    {area.strArea}
+                  </Typography>
+                </CardContent>
                 <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {area.strArea}
-                    </Typography>
-                  </CardContent>
+                  <Button textAlign="center" sx={styles.viewBtn}>
+                    View
+                  </Button>
                 </CardActionArea>
               </Card>
             </Link>
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </Box>
   );
 };
 
