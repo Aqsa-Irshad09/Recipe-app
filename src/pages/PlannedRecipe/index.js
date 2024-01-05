@@ -49,7 +49,7 @@ const PlannedRecipe = () => {
   }, {});
 
   return (
-    <Layout>
+    <>
       <Box sx={{}}>
         <Typography variant="h2">Your Planned Meals</Typography>
       </Box>
@@ -126,7 +126,7 @@ const PlannedRecipe = () => {
       ) : (
         <p>No planned meals available</p>
       )}
-    </Layout>
+    </>
   );
 };
 

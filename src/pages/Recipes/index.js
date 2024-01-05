@@ -34,7 +34,7 @@ const Recipes = () => {
     return null; // Or any placeholder while waiting for data
   }
   return (
-    <Layout>
+    <>
       <Container style={wrapperStyle} pl={0}>
         <Typography variant="h2">Our Recipe</Typography>
         <Grid container spacing={2} pb={4}>
@@ -45,7 +45,7 @@ const Recipes = () => {
           ))}
         </Grid>
       </Container>
-    </Layout>
+    </>
   );
 };
 

@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { fetchMealsForCategory } from "../../redux/features/selectedCategory";
-import ProductCard from "../../components/ProductCard";
+
 import {
   Box,
   Card,
   CardActionArea,
   CardContent,
+  CardMedia,
   Container,
   Grid,
   Typography,
@@ -46,7 +47,7 @@ const CategoryDetail = () => {
   }
 
   return (
-    <Layout>
+    <>
       <Container>
         <Box sx={{}}>
           <Typography variant="h2">Category : {categoryName}</Typography>
@@ -73,7 +74,7 @@ const CategoryDetail = () => {
           ))}
         </Grid>
       </Container>
-    </Layout>
+    </>
   );
 };
 

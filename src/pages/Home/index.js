@@ -22,7 +22,7 @@ const Home = () => {
   };
 
   return (
-    <Layout>
+    <>
       <Carousel
         indicators={false}
         onChange={(index) => handleSlideChange(index)}
@@ -43,7 +43,7 @@ const Home = () => {
       <RandomMeal />
       <RecipeByArea />
       <ProductList />
-    </Layout>
+    </>
   );
 };
 

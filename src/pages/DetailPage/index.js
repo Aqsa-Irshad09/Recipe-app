@@ -33,7 +33,7 @@ const DetailPage = () => {
 
   const numberedInstructions = addNumberingToInstructions(meal.strInstructions);
   return (
-    <Layout>
+    <>
       <Box sx={style.cardImage}>
         <StyledCardMedia
           component="img"
@@ -85,7 +85,7 @@ const DetailPage = () => {
           <Typography>{numberedInstructions}</Typography>
         </Box>
       </Box>
-    </Layout>
+    </>
   );
 };
 

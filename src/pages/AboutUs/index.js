@@ -21,7 +21,7 @@ const AboutUs = () => {
   // Call the function to fetch favorites
   getFavorites();
 
-  return <Layout>AboutUs</Layout>;
+  return <>AboutUs</>;
 };
 
 export default AboutUs;
